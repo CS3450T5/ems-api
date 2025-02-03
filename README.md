@@ -1,16 +1,15 @@
 # EMS api
 
 ## Setup
-I'll be setting up a docker image later, but for now just a poetry setup will work.
-
-Make sure you have poetry installed, then in the project folder run
+### Docker
+To start the server just run:
 ```bash
-poetry install --no-root
+docker compose -f docker-compose-devl.yaml up
 ```
 
-From there, you can run
+If your dev enviornment is being weird, you might need to set up poetry stuff
 ```bash
-poetry run python app.py
+poetry install
 ```
 
 ## Useful links
