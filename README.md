@@ -1,22 +1,18 @@
 # EMS api
 
 ## Setup
-I'll set up a docker file later, but for now you just need set up a venv with
+I'll be setting up a docker image later, but for now just a poetry setup will work.
 
-`python -m venv .venv`
-
-Then activate with
-
-```
-Windows:
-.venv\Scripts\activate.bat
-
-Linux/Mac:
-source .venv/bin/activate
+Make sure you have poetry installed, then in the project folder run
+```bash
+poetry install --no-root
 ```
 
-Then install the required packages
+From there, you can run
+```bash
+poetry run python app.py
+```
 
-`pip install -r requirements.txt`
-
-You should be able to then run the project with 
+## Useful links
+- https://flask-restx.readthedocs.io/en/latest/
+- https://flask.palletsprojects.com/en/stable/
