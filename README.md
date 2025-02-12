@@ -12,6 +12,8 @@ If your dev enviornment is being weird, you might need to set up poetry stuff
 poetry install
 ```
 
+something changed
+
 ## Useful links
 - https://flask-restx.readthedocs.io/en/latest/
 - https://flask.palletsprojects.com/en/stable/
