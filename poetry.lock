@@ -282,6 +282,17 @@ files = [
 ]
 
 [[package]]
+name = "peewee"
+version = "3.17.9"
+description = "a little orm"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "peewee-3.17.9.tar.gz", hash = "sha256:fe15cd001758e324c8e3ca8c8ed900e7397c2907291789e1efc383e66b9bc7a8"},
+]
+
+[[package]]
 name = "pytz"
 version = "2025.1"
 description = "World timezone definitions, modern and historical"
@@ -443,4 +454,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13"
-content-hash = "d770c40568f1ebbcd17bf60895b28201d677d5ccfec6ffc9b519a22a11fbd399"
+content-hash = "3d0c2d458b755327e3252ae58c2477938c3af390e8ee4b1c9ff49f6dead6fbc8"
