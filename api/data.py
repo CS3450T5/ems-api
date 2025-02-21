@@ -1,35 +1,37 @@
 from flask_restx import Namespace, Resource
 
-api = Namespace('data', description='Data Stats')
+data_api = Namespace('data', description='Data Stats')
 
 
-@api.route('/total-usage/<string:date_range>')
+@data_api.route('/total-usage/<string:date_range>')
 # Data = relevant data for date range
 class TotalUsage(Resource):
     def get(self, date_range):
-        return {'TotalUsage': Data}
-    
+        return {'TotalUsage': 'Data'}
+
+
 # max energy cap
-@api.route('max-energy/<string:date_range>')
+@data_api.route('max-energy/<string:date_range>')
 # Data = relevant data for date range
 class MaxEnergy(Resource):
     def get(self, date_range):
-        return {'MaxEnergy': Data}
+        return {'MaxEnergy': 'Data'}
 
 
 # cost of energy production
-@api.route('energy-cost/<string:date_range>')
+@data_api.route('energy-cost/<string:date_range>')
 # Data = relevant data for date range
 class EnergyCost(Resource):
     def get(self, date_range):
-        return {'EnergyCost': Data}
+        return {'EnergyCost': 'Data'}
+
 
 # energy sources
-@api.route('energy-sources/<string:date_range>')
+@data_api.route('energy-sources/<string:date_range>')
 # Data = relevant data for date range
 class EnergySources(Resource):
     def get(self, date_range):
-        return {'EnergySources': Data}
+        return {'EnergySources': 'Data'}
 
 
 
