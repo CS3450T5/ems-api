@@ -15,4 +15,22 @@ class TotalUsage(Resource):
 class MaxEnergy(Resource):
     def get(self, date_range):
         return {'MaxEnergy': Data}
+
+
+# cost of energy production
+@api.route('energy-cost/<string:date_range>')
+# Data = relevant data for date range
+class EnergyCost(Resource):
+    def get(self, date_range):
+        return {'EnergyCost': Data}
+
+# energy sources
+@api.route('energy-sources/<string:date_range>')
+# Data = relevant data for date range
+class EnergySources(Resource):
+    def get(self, date_range):
+        return {'EnergySources': Data}
+
+
+
     
