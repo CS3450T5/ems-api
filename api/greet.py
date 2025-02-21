@@ -15,6 +15,7 @@ class HelloPerson(Resource):
     def get(self, name):
         return {'Hello': name}
 
+      
 @api.route('/test')
 class TestDb(Resource):
     def get(self):
