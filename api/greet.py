@@ -1,22 +1,22 @@
 from flask_restx import Namespace, Resource
-from models import Device, db, DataEntry
+from models import Device, db
 
-api = Namespace('greet', description='Greetings')
+greet_api = Namespace('greet', description='Greetings')
 
 
-@api.route('/')
+@greet_api.route('/')
 class HelloWorld(Resource):
     def get(self):
         return {'Hello': 'World'}
 
 
-@api.route('/<string:name>')
+@greet_api.route('/<string:name>')
 class HelloPerson(Resource):
     def get(self, name):
         return {'Hello': name}
 
-      
-@api.route('/test')
+
+@greet_api.route('/test')
 class TestDb(Resource):
     def get(self):
         # Would be better to have a set of files just for retrieval
@@ -25,3 +25,4 @@ class TestDb(Resource):
         db.connect()
         test = Device.select()
         return {'test': test[1].device_id}
+
