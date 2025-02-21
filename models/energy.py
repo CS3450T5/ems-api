@@ -1,5 +1,7 @@
-from peewee import Model, CharField, SqliteDatabase, ForeignKeyField, DateField, FloatField, IntegerField
+from peewee import Model, CharField, SqliteDatabase, ForeignKeyField
+from peewee import TimestampField, FloatField, IntegerField
 import csv
+from dateutil.parser import parse
 db = SqliteDatabase('usage_data.db')
 
 
@@ -13,7 +15,7 @@ class Device(Model):
 
 
 class DataEntry(Model):
-    timestamp = DateField()
+    timestamp = TimestampField()
     device = ForeignKeyField(Device, backref='entries')
     voltage = FloatField(null=True)
     current = FloatField(null=True)
@@ -25,8 +27,7 @@ class DataEntry(Model):
     class Meta:
         database = db
 
-# Very hacked together I should fix this - Zach
-# Also fix my timestamp shenanagans
+
 def main():
     db.connect()
     db.create_tables([Device, DataEntry])
@@ -40,7 +41,9 @@ def main():
             print(f"ID: {row[0]}")
             print(f"Display Name: {row[1]}")
             print(f"Equp. Type = {row[2]}")
-            tempDev = Device(device_id=row[0], display_name=row[1], equipment_type=row[2])
+            tempDev = Device(device_id=row[0],
+                             display_name=row[1],
+                             equipment_type=row[2])
             tempDev.save()
 
     with open('entries.csv', newline='') as entries:
@@ -54,10 +57,17 @@ def main():
             # state = 6
             # fault = 7
             # entry = 8
-            entry_device = Device.select().where(Device.device_id == row[1]).get()
-            tempEntry = DataEntry(timestamp=row[0], device=entry_device, voltage=row[2], current=row[3], power=row[4], state=row[6], fault=row[7], entry=row[8])
+            entry_device = Device.get(Device.device_id == row[1])
+            tempEntry = DataEntry(timestamp=int(parse(row[0]).strftime('%s')),
+                                  device=entry_device,
+                                  voltage=row[2],
+                                  current=row[3],
+                                  power=row[4],
+                                  state=row[6],
+                                  fault=row[7],
+                                  entry=row[8])
             tempEntry.save()
-            print('.', end='')
+
 
 if __name__ == "__main__":
     main()
