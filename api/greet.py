@@ -15,7 +15,7 @@ class HelloWorld(Resource):
 class HelloPerson(Resource):
     def get(self, name):
         print()
-        return {'Hello': os.environ['DB_PASS']}
+        return {'Hello': name}
 
 
 @greet_api.route('/test')
