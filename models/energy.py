@@ -1,11 +1,19 @@
-from peewee import Model, CharField, SqliteDatabase, ForeignKeyField
+from peewee import Model, CharField, ForeignKeyField, MySQLDatabase
 from peewee import TimestampField, FloatField, IntegerField
-from peewee import *
 
 import csv
 from dateutil.parser import parse
 
-db = MySQLDatabase('ems-data', host='directlab.go.usu.edu', user='ems-team', password='Prod_w)=jp=VS0Q(@O~1*m8qB@*`p(YKA~R')
+import os
+
+database = os.environ['DB_NAME']
+host = os.environ['DB_HOST']
+user = os.environ['DB_USER']
+passwd = os.environ['DB_PASS']
+
+
+db = MySQLDatabase(database, host=host, user=user, password=passwd)
+
 
 class Device(Model):
     device_id = CharField()
@@ -28,7 +36,6 @@ class DataEntry(Model):
 
     class Meta:
         database = db
-
 
 
 def main():

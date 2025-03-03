@@ -1,5 +1,6 @@
 from flask_restx import Namespace, Resource
 from models import Device, db
+import os
 
 greet_api = Namespace('greet', description='Greetings')
 
@@ -13,7 +14,8 @@ class HelloWorld(Resource):
 @greet_api.route('/<string:name>')
 class HelloPerson(Resource):
     def get(self, name):
-        return {'Hello': name}
+        print()
+        return {'Hello': os.environ['DB_PASS']}
 
 
 @greet_api.route('/test')
@@ -25,4 +27,3 @@ class TestDb(Resource):
         db.connect()
         test = Device.select()
         return {'test': test[1].device_id}
-
