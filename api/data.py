@@ -32,7 +32,3 @@ class EnergyCost(Resource):
 class EnergySources(Resource):
     def get(self, date_range):
         return {'EnergySources': 'Data'}
-
-
-
-    

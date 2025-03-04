@@ -1,8 +1,18 @@
-from peewee import Model, CharField, SqliteDatabase, ForeignKeyField
+from peewee import Model, CharField, ForeignKeyField, MySQLDatabase
 from peewee import TimestampField, FloatField, IntegerField
+
 import csv
 from dateutil.parser import parse
-db = SqliteDatabase('usage_data.db')
+
+import os
+
+database = os.environ['DB_NAME']
+host = os.environ['DB_HOST']
+user = os.environ['DB_USER']
+passwd = os.environ['DB_PASS']
+
+
+db = MySQLDatabase(database, host=host, user=user, password=passwd)
 
 
 class Device(Model):
