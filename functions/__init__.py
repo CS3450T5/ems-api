@@ -1,0 +1,1 @@
+from .device_total_function import get_device_total_usage as get_device_total_usage

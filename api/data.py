@@ -1,6 +1,11 @@
 from flask_restx import Namespace, Resource
 
+from functions import get_device_total_usage
+
+from models import device_total_usage_model
+
 data_api = Namespace('data', description='Data Stats')
+data_api.models[device_total_usage_model.name] = device_total_usage_model
 
 
 @data_api.route('/total-usage/<string:date_range>')
@@ -32,3 +37,11 @@ class EnergyCost(Resource):
 class EnergySources(Resource):
     def get(self, date_range):
         return {'EnergySources': 'Data'}
+
+
+@data_api.route('/device-total/<string:device_name>')
+class DeviceTotal(Resource):
+    @data_api.marshal_with(device_total_usage_model)
+    def get(self, device_name):
+        total = get_device_total_usage(device_name)
+        return {'device_id': device_name, 'device_total': total}

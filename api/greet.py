@@ -1,6 +1,5 @@
 from flask_restx import Namespace, Resource
 from models import Device, db
-import os
 
 greet_api = Namespace('greet', description='Greetings')
 
