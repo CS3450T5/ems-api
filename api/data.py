@@ -43,5 +43,9 @@ class EnergySources(Resource):
 class DeviceTotal(Resource):
     @data_api.marshal_with(device_total_usage_model)
     def get(self, device_name):
-        total = get_device_total_usage(device_name)
-        return {'device_id': device_name, 'device_total': total}
+        totals = get_device_total_usage(device_name)
+        return {'device_id': device_name,
+                'device_voltage_total': totals[0],
+                'device_current_total': totals[1],
+                'device_power_total': totals[2],
+                }
