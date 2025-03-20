@@ -1,18 +1,25 @@
 from flask_restx import Namespace, Resource
+from peewee import TimestampField
 
-from functions import get_device_total_usage
+from functions import get_device_total_usage, get_total_usage
 
-from models import device_total_usage_model
+from models import device_total_usage_model, total_usage_model
 
 data_api = Namespace('data', description='Data Stats')
 data_api.models[device_total_usage_model.name] = device_total_usage_model
+data_api.models[total_usage_model.name] = total_usage_model
 
 
-@data_api.route('/total-usage/<string:date_range>')
-# Data = relevant data for date range
+@data_api.route('/total-usage/<TimeStamp:start_time>/<TimeStamp:end_time>')
 class TotalUsage(Resource):
-    def get(self, date_range):
-        return {'TotalUsage': 'Data'}
+    def get(self, start_time, end_time):
+        total = get_total_usage(start_time, end_time)
+        return {'start_time': start_time,
+                'end_time': end_time,
+                'voltage_total': total[0],
+                'current_total': total[1],
+                'power_total': total[2],
+                }
 
 
 # max energy cap
