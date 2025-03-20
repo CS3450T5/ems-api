@@ -10,7 +10,7 @@ data_api.models[device_total_usage_model.name] = device_total_usage_model
 data_api.models[total_usage_model.name] = total_usage_model
 
 
-@data_api.route('/total-usage/<TimeStamp:start_time>/<TimeStamp:end_time>')
+@data_api.route('/total-usage/<string:start_time>/<string:end_time>')
 class TotalUsage(Resource):
     def get(self, start_time, end_time):
         total = get_total_usage(start_time, end_time)
