@@ -1,9 +1,9 @@
 from flask_restx import Namespace, Resource
 from peewee import TimestampField
-
+from datetime import datetime  # Import datetime for conversion
 from functions import get_device_total_usage, get_total_usage, get_max_energy
-
 from models import device_total_usage_model, total_usage_model, max_energy_model
+
 
 data_api = Namespace('data', description='Data Stats')
 data_api.models[device_total_usage_model.name] = device_total_usage_model
@@ -13,13 +13,26 @@ data_api.models[max_energy_model.name] = max_energy_model
 @data_api.route('/total-usage/<string:start_time>/<string:end_time>')
 class TotalUsage(Resource):
     def get(self, start_time, end_time):
-        total = get_total_usage(start_time, end_time)
-        return {'start_time': start_time,
-                'end_time': end_time,
-                'voltage_total': total[0],
-                'current_total': total[1],
-                'power_total': total[2],
-                }
+        # Convert start_time and end_time to datetime objects
+        try:
+            start_time_dt = datetime.fromisoformat(start_time)
+            end_time_dt = datetime.fromisoformat(end_time)
+        except ValueError:
+            return {"error": "Invalid datetime format. Use ISO 8601 format (e.g., 'YYYY-MM-DDTHH:MM:SS')."}, 400
+
+        start_time = TimestampField().python_value(start_time)
+        end_time = TimestampField().python_value(end_time)
+
+        # Pass the datetime objects to get_total_usage
+        total = get_total_usage(start_time_dt, end_time_dt)
+        
+        return {
+            'start_time': start_time,
+            'end_time': end_time,
+            'voltage_total': total[0],
+            'current_total': total[1],
+            'power_total': total[2],
+        }
 
 
 # max energy cap
