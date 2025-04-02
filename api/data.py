@@ -1,13 +1,14 @@
 from flask_restx import Namespace, Resource
 from peewee import TimestampField
-from functions import get_device_total_usage, get_total_usage
-from models import device_total_usage_model, total_usage_model
 from datetime import datetime  # Import datetime for conversion
+from functions import get_device_total_usage, get_total_usage, get_max_energy
+from models import device_total_usage_model, total_usage_model, max_energy_model
+
 
 data_api = Namespace('data', description='Data Stats')
 data_api.models[device_total_usage_model.name] = device_total_usage_model
 data_api.models[total_usage_model.name] = total_usage_model
-
+data_api.models[max_energy_model.name] = max_energy_model
 
 @data_api.route('/total-usage/<string:start_time>/<string:end_time>')
 class TotalUsage(Resource):
@@ -29,8 +30,9 @@ class TotalUsage(Resource):
 @data_api.route('max-energy/<string:date_range>')
 # Data = relevant data for date range
 class MaxEnergy(Resource):
-    def get(self, date_range):
-        return {'MaxEnergy': 'Data'}
+    def get(self):
+        max_energy = get_max_energy()
+        return {'MaxEnergy': max_energy}
 
 
 # cost of energy production
