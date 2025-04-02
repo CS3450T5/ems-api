@@ -12,18 +12,9 @@ data_api.models[total_usage_model.name] = total_usage_model
 @data_api.route('/total-usage/<string:start_time>/<string:end_time>')
 class TotalUsage(Resource):
     def get(self, start_time, end_time):
-        # Convert start_time and end_time to datetime objects
-        try:
-            start_time_dt = datetime.fromisoformat(start_time)
-            end_time_dt = datetime.fromisoformat(end_time)
-        except ValueError:
-            return {"error": "Invalid datetime format. Use ISO 8601 format (e.g., 'YYYY-MM-DDTHH:MM:SS')."}, 400
-
-        start_time = TimestampField().python_value(start_time)
-        end_time = TimestampField().python_value(end_time)
-
-        # Pass the datetime objects to get_total_usage
-        total = get_total_usage(start_time_dt, end_time_dt)
+        start_time = int(start_time)
+        end_time = int(end_time)
+        total = get_total_usage(start_time, end_time)
         
         return {
             'start_time': start_time,
