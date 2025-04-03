@@ -1,7 +1,7 @@
 from flask_restx import Namespace, Resource
 from peewee import TimestampField
 from datetime import datetime  # Import datetime for conversion
-from functions import get_device_total_usage, get_total_usage, get_max_energy, get_energy_source
+from functions import get_device_total_usage, get_total_usage, get_energy_source, get_max_energy
 from models import device_total_usage_model, total_usage_model, max_energy_model
 
 
@@ -27,7 +27,7 @@ class TotalUsage(Resource):
 
 
 # max energy cap
-@data_api.route('max-energy/<string:date_range>')
+@data_api.route('/max-energy')
 # Data = relevant data for date range
 class MaxEnergy(Resource):
     def get(self):
