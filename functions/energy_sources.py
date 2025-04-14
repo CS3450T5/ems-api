@@ -1,4 +1,5 @@
 from models import Device, DataEntry
+from functions import get_device_total_usage
 
 # returning the type of energy source for a given device
 # i'm thinking that you'd call this function for each device maybe in conjunction with
@@ -14,3 +15,15 @@ def get_energy_source(device_name: str):
 # also some of the devices are "in" and some are "out"
 # like "charger" vs "solar"
 # anyways TLDR for now just returning equipment type but this will need some changes later.
+
+# time for "changes later"
+def get_energy_sums():
+    output = list()
+    for device in Device.select():
+        power = get_device_total_usage(device.device_id)
+        # filter down to power suppliers and not power users
+        if power[2] > 0 and power[1] > 0 and device.equipment_type != "charger":
+            output.append([device.equipment_type, power[2]])
+            
+        
+    return output
