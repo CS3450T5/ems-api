@@ -1,7 +1,7 @@
 from flask_restx import Namespace, Resource
 from peewee import TimestampField
 from datetime import datetime  # Import datetime for conversion
-from functions import get_device_total_usage, get_total_usage, get_energy_source, get_max_energy
+from functions import get_device_total_usage, get_total_usage, get_energy_source, get_max_energy, get_energy_sums
 from models import device_total_usage_model, total_usage_model, max_energy_model
 
 
@@ -50,6 +50,25 @@ class EnergySources(Resource):
     def get(self, device_name):
         output = get_energy_source(device_name)
         return {'EnergySources': output}
+    
+
+# energy sources general read-out
+# returns an array of sources with percentages of production
+# in practice with our data set this returns 100% solar
+@data_api.route('energy-sources/general')
+class EnergySourcesGeneral(Resource):
+    def get(self):
+        data = get_energy_sums()
+        types = list()
+        uniquetypes = list()
+        for entry in data:
+            if entry[0] not in uniquetypes:
+                types.append([entry[0], 0])
+                uniquetypes.append(entry[0])
+            for type in types:
+                if entry[0] == type[0]:
+                    type[1] += entry[1]
+        return types
 
 
 @data_api.route('/device-total/<string:device_name>')
