@@ -36,7 +36,7 @@ class MaxEnergy(Resource):
 
 
 # cost of energy production
-@data_api.route('energy-cost/<string:date_range>')
+@data_api.route('/energy-cost/<string:date_range>')
 # Data = relevant data for date range
 class EnergyCost(Resource):
     def get(self, date_range):
@@ -44,18 +44,20 @@ class EnergyCost(Resource):
 
 
 # energy sources
-@data_api.route('energy-sources/<string:device_name>')
+@data_api.route('/energy-sources/<string:device_name>')
 # Data = relevant data for date range
 class EnergySources(Resource):
     def get(self, device_name):
         output = get_energy_source(device_name)
-        return {'EnergySources': output}
+        return {'EnergySources': output[0],
+                'DisplayName': output[1]
+                }
     
 
 # energy sources general read-out
 # returns an array of sources with percentages of production
 # in practice with our data set this returns 100% solar
-@data_api.route('energy-sources/general')
+@data_api.route('/energy-sources/general')
 class EnergySourcesGeneral(Resource):
     def get(self):
         data = get_energy_sums()
@@ -76,8 +78,9 @@ class DeviceTotal(Resource):
     @data_api.marshal_with(device_total_usage_model)
     def get(self, device_name):
         totals = get_device_total_usage(device_name)
-        return {'device_id': device_name,
-                'device_voltage_total': totals[0],
-                'device_current_total': totals[1],
-                'device_power_total': totals[2],
+        return {'device_id': totals[0],
+                'device_voltage_total': totals[1],
+                'device_current_total': totals[2],
+                'device_power_total': totals[3],
                 }
+
