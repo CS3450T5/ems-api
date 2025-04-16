@@ -82,5 +82,7 @@ class DeviceTotal(Resource):
                 'device_voltage_total': totals[1],
                 'device_current_total': totals[2],
                 'device_power_total': totals[3],
+                'device_state': totals[4],
+                'device_entries': totals[5]
                 }
 
