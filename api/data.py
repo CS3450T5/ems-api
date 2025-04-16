@@ -44,7 +44,7 @@ class EnergyCost(Resource):
 
 
 # energy sources
-@data_api.route('energy-sources/<string:device_name>')
+@data_api.route('/energy-sources/<string:device_name>')
 # Data = relevant data for date range
 class EnergySources(Resource):
     def get(self, device_name):
@@ -55,13 +55,15 @@ class EnergySources(Resource):
 # energy sources general read-out
 # returns an array of sources with percentages of production
 # in practice with our data set this returns 100% solar
-@data_api.route('energy-sources/general')
+@data_api.route('/energy-sources-general')
 class EnergySourcesGeneral(Resource):
     def get(self):
         data = get_energy_sums()
         types = list()
         uniquetypes = list()
         for entry in data:
+            if entry[0] == "facility":
+                continue
             if entry[0] not in uniquetypes:
                 types.append([entry[0], 0])
                 uniquetypes.append(entry[0])
