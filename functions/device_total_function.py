@@ -15,8 +15,4 @@ def get_device_total_usage(device_name: str):
          state = entry.state
          count += 1
 
-    # voltage_total = voltage_total / 29673
-    # current_total = current_total / 29673
-    # power_total = power_total / 29673
-
     return (display_name, voltage_total, current_total, power_total, state, count)
