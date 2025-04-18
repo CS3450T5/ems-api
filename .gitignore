@@ -8,3 +8,7 @@ dist/
 htmlcov/
 .tox/
 docs/_build/
+data/
+*.db
+*.csv
+.env
